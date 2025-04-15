@@ -1,14 +1,8 @@
 import { type Metadata } from 'next'
-import {
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Providers from '@/components/Providers'
+import Header from '@/components/Header'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,15 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <header className='flex h-16 items-center justify-end gap-4 p-4'>
-            <SignedOut>
-              <SignInButton mode='modal' />
-              <SignUpButton mode='modal' />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
+          <Header />
           {children}
         </Providers>
       </body>
