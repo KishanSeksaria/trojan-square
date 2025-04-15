@@ -7,10 +7,10 @@ export default defineSchema({
     firstName: v.string(),
     lastName: v.string(),
     email: v.string(),
-    image: v.optional(v.string()),
+    imageUrl: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number()
   })
-    .index('byClerkUserId', ['clerkUserId'])
-    .index('byEmail', ['email'])
+    .index('by_clerk_userId', ['clerkUserId'])
+    .index('by_email', ['email'])
 })

@@ -1,7 +1,7 @@
 import { httpRouter } from 'convex/server'
 import { httpAction } from './_generated/server'
 import { internal } from './_generated/api'
-import type { WebhookEvent } from '@clerk/backend'
+import type { UserJSON, WebhookEvent } from '@clerk/backend'
 import { Webhook } from 'svix'
 
 const http = httpRouter()
@@ -14,19 +14,30 @@ http.route({
     if (!event) {
       return new Response('Error occurred', { status: 400 })
     }
-    console.log('Received Clerk webhook event', event)
+    console.log('Received Clerk webhook event data', event.data)
+    const {
+      id: clerkUserId,
+      first_name,
+      last_name,
+      email_addresses,
+      image_url
+    } = event.data as UserJSON
 
     switch (event.type) {
       case 'user.created': // intentional fallthrough
       case 'user.updated':
-        // await ctx.runMutation(internal.users.upsertFromClerk, {
-        //   data: event.data
-        // })
+        await ctx.runMutation(internal.users.upsertFromClerk, {
+          clerkUserId: clerkUserId!,
+          first_name: first_name || '',
+          last_name: last_name || '',
+          email: email_addresses[0]?.email_address || '',
+          image_url: image_url || ''
+        })
         break
 
       case 'user.deleted': {
         const clerkUserId = event.data.id!
-        // await ctx.runMutation(internal.users.deleteFromClerk, { clerkUserId })
+        await ctx.runMutation(internal.users.deleteFromClerk, { clerkUserId })
         break
       }
       default:
