@@ -30,19 +30,6 @@ export const getByEmail = zQuery({
   }
 })
 
-export const getByClerkId = zQuery({
-  args: {
-    clerkUserId: z.string()
-  },
-  handler: async (ctx, args) => {
-    const { clerkUserId } = args
-    return await ctx.db
-      .query('users')
-      .withIndex('by_clerk_userId', q => q.eq('clerkUserId', clerkUserId))
-      .unique()
-  }
-})
-
 export const getCurrentUser = zQuery({
   args: {},
   handler: async ctx => {
