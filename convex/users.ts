@@ -1,10 +1,14 @@
 import z from 'zod'
 import { zInternalMutation, zQuery } from './utils'
 import { zid } from 'convex-helpers/server/zod'
+import { ClerkUserWebhookSchema } from '../src/lib/zod'
 
 export const getAll = zQuery({
   args: {},
-  handler: async ctx => await ctx.db.query('users').collect()
+  handler: async ctx => {
+    const users = await ctx.db.query('users').collect()
+    return users
+  }
 })
 
 export const getById = zQuery({
@@ -13,7 +17,8 @@ export const getById = zQuery({
   },
   handler: async (ctx, args) => {
     const { id } = args
-    return await ctx.db.get(id)
+    const user = await ctx.db.get(id)
+    return user
   }
 })
 
@@ -23,10 +28,11 @@ export const getByEmail = zQuery({
   },
   handler: async (ctx, args) => {
     const { email } = args
-    return await ctx.db
+    const user = await ctx.db
       .query('users')
       .withIndex('by_email', q => q.eq('email', email))
       .unique()
+    return user
   }
 })
 
@@ -37,21 +43,16 @@ export const getCurrentUser = zQuery({
     if (!identity) {
       return null
     }
-    return await ctx.db
+    const user = await ctx.db
       .query('users')
       .withIndex('by_clerk_userId', q => q.eq('clerkUserId', identity.subject))
       .unique()
+    return user
   }
 })
 
 export const upsertFromClerk = zInternalMutation({
-  args: z.object({
-    clerkUserId: z.string(),
-    first_name: z.string(),
-    last_name: z.string(),
-    email: z.string(),
-    image_url: z.optional(z.string())
-  }),
+  args: ClerkUserWebhookSchema,
   handler: async (ctx, args) => {
     const { clerkUserId, first_name, last_name, email, image_url } = args
     const now = Date.now()
@@ -90,9 +91,22 @@ export const deleteFromClerk = zInternalMutation({
     const user = await ctx.db
       .query('users')
       .withIndex('by_clerk_userId', q => q.eq('clerkUserId', clerkUserId))
-      .first()
-    if (user) {
-      await ctx.db.delete(user._id)
+      .unique()
+    if (!user) {
+      return
     }
+    const now = Date.now()
+    // Move the user to the archived users table
+    const archivedUser = {
+      clerkUserId: user.clerkUserId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      imageUrl: user.imageUrl,
+      createdAt: user.createdAt,
+      deletedAt: now
+    }
+    await ctx.db.insert('archivedUsers', archivedUser) // Move the user to the archived users table
+    await ctx.db.delete(user._id)
   }
 })
