@@ -16,12 +16,13 @@ import {
   navigationMenuTriggerStyle
 } from './ui/navigation-menu'
 import { navigationItems } from '@/config/navigation'
+import { Button } from './ui/button'
 
 function Header() {
   return (
-    <header className='bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur'>
-      <div className='flex h-16 items-center px-4'>
-        <nav className='flex flex-1 items-center gap-6'>
+    <header className='sticky top-0 z-50 w-full border-b backdrop-blur'>
+      <nav className='flex h-16 items-center justify-between px-4'>
+        <div className='flex items-center gap-4'>
           <Link href='/' className='flex items-center gap-2'>
             <Image src='/globe.svg' alt='Logo' width={24} height={24} />
             <span className='hidden font-bold sm:inline-block'>
@@ -29,56 +30,54 @@ function Header() {
             </span>
           </Link>
           <SignedIn>
-            <NavigationMenu>
-              <NavigationMenuList>
-                {navigationItems.map(item => (
-                  <NavigationLinkItem
-                    key={item.href}
-                    href={item.href}
-                    title={item.title}
-                  />
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
+            <Navigation navigationItems={navigationItems} />
           </SignedIn>
-        </nav>
+        </div>
 
-        <div className='ml-auto flex items-center gap-4'>
+        <div className='flex items-center gap-1'>
           <ModeToggle />
           <SignedOut>
             <SignInButton mode='modal'>
-              <button className='hover:text-primary text-sm font-medium transition-colors'>
+              <Button variant='ghost' size='sm' className='ml-1'>
                 Sign In
-              </button>
+              </Button>
             </SignInButton>
             <SignUpButton mode='modal'>
-              <button className='hover:text-primary text-sm font-medium transition-colors'>
+              <Button variant='ghost' size='sm'>
                 Sign Up
-              </button>
+              </Button>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
         </div>
-      </div>
+      </nav>
     </header>
   )
 }
 
-type NavigationLinkItemProps = {
-  href: string
-  title: string
-}
-
-const NavigationLinkItem = ({ href, title }: NavigationLinkItemProps) => (
-  <NavigationMenuItem key={href}>
-    <Link href={href} legacyBehavior passHref>
-      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-        {title}
-      </NavigationMenuLink>
-    </Link>
-  </NavigationMenuItem>
+const Navigation = ({
+  navigationItems
+}: {
+  navigationItems: {
+    title: string
+    href: string
+  }[]
+}) => (
+  <NavigationMenu>
+    <NavigationMenuList>
+      {navigationItems.map(({ href, title }) => (
+        <NavigationMenuItem key={href}>
+          <Link href={href} legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              {title}
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+      ))}
+    </NavigationMenuList>
+  </NavigationMenu>
 )
 
 export default Header
