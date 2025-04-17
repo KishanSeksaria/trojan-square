@@ -28,5 +28,20 @@ export default defineSchema({
     deletedAt: v.number()
   })
     .index('by_clerk_userId', ['clerkUserId'])
-    .index('by_email', ['email'])
+    .index('by_email', ['email']),
+
+  // The schema for the chats table
+  chats: defineTable({
+    userId: v.id('users'),
+    title: v.string(),
+    createdAt: v.number()
+  }).index('by_userId', ['userId']),
+
+  // The schema for the messages table
+  messages: defineTable({
+    chatId: v.id('chats'),
+    content: v.string(),
+    role: v.union(v.literal('user'), v.literal('assistant')),
+    createdAt: v.number()
+  }).index('by_chatId', ['chatId'])
 })

@@ -2,6 +2,7 @@ import z from 'zod'
 import { zInternalMutation, zQuery } from './utils'
 import { zid } from 'convex-helpers/server/zod'
 import { ClerkUserWebhookSchema } from '../src/lib/zod'
+import { QueryCtx } from './_generated/server'
 
 export const getAll = zQuery({
   args: {},
@@ -15,8 +16,7 @@ export const getById = zQuery({
   args: {
     id: zid('users')
   },
-  handler: async (ctx, args) => {
-    const { id } = args
+  handler: async (ctx, { id }) => {
     const user = await ctx.db.get(id)
     return user
   }
@@ -26,8 +26,7 @@ export const getByEmail = zQuery({
   args: {
     email: z.string().email()
   },
-  handler: async (ctx, args) => {
-    const { email } = args
+  handler: async (ctx, { email }) => {
     const user = await ctx.db
       .query('users')
       .withIndex('by_email', q => q.eq('email', email))
@@ -38,17 +37,7 @@ export const getByEmail = zQuery({
 
 export const getCurrentUser = zQuery({
   args: {},
-  handler: async ctx => {
-    const identity = await ctx.auth.getUserIdentity()
-    if (!identity) {
-      return null
-    }
-    const user = await ctx.db
-      .query('users')
-      .withIndex('by_clerk_userId', q => q.eq('clerkUserId', identity.subject))
-      .unique()
-    return user
-  }
+  handler: async ctx => await getAuthenticatedUser(ctx)
 })
 
 export const upsertFromClerk = zInternalMutation({
@@ -83,11 +72,10 @@ export const upsertFromClerk = zInternalMutation({
 })
 
 export const deleteFromClerk = zInternalMutation({
-  args: z.object({
+  args: {
     clerkUserId: z.string()
-  }),
-  handler: async (ctx, args) => {
-    const { clerkUserId } = args
+  },
+  handler: async (ctx, { clerkUserId }) => {
     const user = await ctx.db
       .query('users')
       .withIndex('by_clerk_userId', q => q.eq('clerkUserId', clerkUserId))
@@ -110,3 +98,18 @@ export const deleteFromClerk = zInternalMutation({
     await ctx.db.delete(user._id)
   }
 })
+
+export const getAuthenticatedUser = async (ctx: QueryCtx) => {
+  const identity = await ctx.auth.getUserIdentity()
+  if (!identity) {
+    throw new Error('Not authenticated')
+  }
+  const user = await ctx.db
+    .query('users')
+    .withIndex('by_clerk_userId', q => q.eq('clerkUserId', identity.subject))
+    .unique()
+  if (!user) {
+    throw new Error('User not found')
+  }
+  return user
+}
