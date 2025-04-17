@@ -1,18 +1,18 @@
 import { type Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Source_Sans_3, Source_Serif_4 } from 'next/font/google'
 import './globals.css'
 import Providers from '@/components/Providers'
 import Header from '@/components/Header'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
+const sourceSans = Source_Sans_3({
+  subsets: ['latin'],
+  variable: '--font-source-sans'
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  variable: '--font-source-serif'
 })
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning className='h-full'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex h-full min-h-screen flex-col antialiased`}
+        className={`${sourceSans.variable} ${sourceSerif.variable} flex h-full min-h-screen flex-col font-sans antialiased`}
       >
         <Providers>
           <Header />

@@ -20,10 +20,12 @@ import { Button } from './ui/button'
 
 function Header() {
   return (
-    <header className='sticky top-0 z-50 w-full border-b backdrop-blur'>
+    <header className='sticky top-0 z-50 w-full backdrop-blur'>
       <nav className='flex h-16 items-center justify-between px-4'>
+        {/* Logo and Navigation  */}
         <div className='flex items-center gap-4'>
           <Link href='/' className='flex items-center gap-2'>
+            {/* TODO: Change Logo */}
             <Image src='/globe.svg' alt='Logo' width={24} height={24} />
             <span className='hidden font-bold sm:inline-block'>
               Trojan Square
@@ -34,8 +36,11 @@ function Header() {
           </SignedIn>
         </div>
 
+        {/* User Menu and Theme Toggle */}
         <div className='flex items-center gap-1'>
           <ModeToggle />
+
+          {/* If the user is signed out, show sign in and sign up buttons */}
           <SignedOut>
             <SignInButton mode='modal'>
               <Button variant='ghost' size='sm' className='ml-1'>
@@ -48,6 +53,8 @@ function Header() {
               </Button>
             </SignUpButton>
           </SignedOut>
+
+          {/* If the user is signed in, show the user button */}
           <SignedIn>
             <UserButton />
           </SignedIn>
