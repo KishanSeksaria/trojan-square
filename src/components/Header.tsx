@@ -37,7 +37,7 @@ function Header() {
         </div>
 
         {/* User Menu and Theme Toggle */}
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-4'>
           <ModeToggle />
 
           {/* If the user is signed out, show sign in and sign up buttons */}
