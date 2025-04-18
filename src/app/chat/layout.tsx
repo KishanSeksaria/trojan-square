@@ -1,4 +1,5 @@
-import { Sidebar, SidebarProvider } from '@/components/ui/sidebar'
+import ChatSidebar from '@/components/ChatSidebar'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 export default function ChatLayout({
   children
@@ -6,9 +7,9 @@ export default function ChatLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className='flex w-full items-center justify-center'>
-      {/* <Sidebar></Sidebar> */}
-      {children}
-    </div>
+    <SidebarProvider>
+      <ChatSidebar />
+      <SidebarInset>{children}</SidebarInset>
+    </SidebarProvider>
   )
 }

@@ -1,3 +1,7 @@
 export default function Home() {
-  return <h1 className='text-3xl font-bold'>Welcome to Trojan Square!</h1>
+  return (
+    <main>
+      <h1 className='text-3xl font-bold'>Welcome to Trojan Square!</h1>
+    </main>
+  )
 }
