@@ -18,7 +18,7 @@ import { HTMLAttributes } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
 function ChatSidebar({ ...props }: HTMLAttributes<HTMLDivElement>) {
-  const chats = useQuery(api.chats.getAllForAuthenticatedUser)
+  const chats = useQuery(api.chats.getAuthenticatedUserChats)
   const createChat = useMutation(api.chats.create)
   const router = useRouter()
   const { chatId } = useParams()

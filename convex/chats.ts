@@ -106,7 +106,7 @@ export const remove = zMutation({
   }
 })
 
-export const getAllForAuthenticatedUser = zQuery({
+export const getAuthenticatedUserChats = zQuery({
   args: {},
   handler: async ctx => {
     const user = await getAuthenticatedUser(ctx)

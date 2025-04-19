@@ -17,7 +17,7 @@ export default function ChatLayout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
+    <>
       <ChatSidebar />
       <SidebarInset>
         <NavigationMenu className='w-full flex-0 px-4'>
@@ -31,6 +31,6 @@ export default function ChatLayout({
           {children}
         </div>
       </SidebarInset>
-    </SidebarProvider>
+    </>
   )
 }
