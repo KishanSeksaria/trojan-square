@@ -1,6 +1,6 @@
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
-import { zMutation, zQuery } from './utils'
+import { zInternalQuery, zMutation, zQuery } from './utils'
 import { getAuthenticatedUser } from './users'
 
 // Get a specific chat by ID
@@ -16,7 +16,7 @@ export const getById = zQuery({
 })
 
 // Get all chats for a user
-export const getAllByUser = zQuery({
+export const getAllByUser = zInternalQuery({
   args: {},
   handler: async ctx => {
     try {
@@ -103,5 +103,19 @@ export const remove = zMutation({
 
     // Delete the chat
     await ctx.db.delete(id)
+  }
+})
+
+export const getAllForAuthenticatedUser = zQuery({
+  args: {},
+  handler: async ctx => {
+    const user = await getAuthenticatedUser(ctx)
+    const chats = await ctx.db
+      .query('chats')
+      .withIndex('by_userId', q => q.eq('userId', user._id))
+      .order('desc')
+      .collect()
+
+    return chats
   }
 })
