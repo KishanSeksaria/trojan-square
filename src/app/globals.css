@@ -45,41 +45,60 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --primary: oklch(0.4825 0.1446 29.2339); /* USC Cardinal (#990000) */
-  --primary-foreground: oklch(0.865 0.198 83.745); /* USC Gold (#ffcc00) */
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.145 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.865 0.198 83.745); /* USC Gold (#ffcc00) */
-  --accent-foreground: oklch(
-    0.4825 0.1446 29.2339
-  ); /* USC Cardinal (#990000) */
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(1 0 0); /* white */
-  --ring: oklch(0.4825 0.1446 29.2339); /* USC Cardinal */
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.4825 0.1446 29.2339);
-  --sidebar-primary-foreground: oklch(0.865 0.198 83.745);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.145 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.4825 0.1446 29.2339);
-  --chart-1: oklch(0.4825 0.1446 29.2339);
-  --chart-2: oklch(0.865 0.198 83.745);
-  --chart-3: oklch(0.398 0 0); /* placeholder, unchanged */
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Core USC Colors */
+  --primary: oklch(0.4825 0.1446 29.2339); /* USC Cardinal */
+  --primary-foreground: oklch(0.865 0.198 83.745); /* USC Gold */
+
+  /* General UI Theme */
+  --background: oklch(0.96 0.005 29);        /* Soft parchment (light beige) */
+  --foreground: oklch(0.22 0.01 29);         /* Near-black warm gray */
+
+  --card: oklch(0.97 0.01 29);               /* Light card */
+  --card-foreground: var(--foreground);
+
+  --popover: oklch(0.93 0.01 29);
+  --popover-foreground: var(--foreground);
+
+  --border: oklch(0.75 0.01 29);             /* Soft border tone */
+  --input: oklch(0.75 0.01 29);
+
+  /* Accent and Muted */
+  --accent: var(--primary-foreground);       /* Gold */
+  --accent-foreground: var(--primary);       /* Cardinal */
+
+  --muted: oklch(0.85 0.01 29);              /* Soft muted beige */
+  --muted-foreground: oklch(0.45 0.01 29);   /* Muted text */
+
+  /* Dark Sidebar Theme */
+  --secondary: oklch(0.26 0.02 29);          /* Soft dark slate (for sidebar) */
+  --secondary-foreground: oklch(0.97 0.02 85); /* Pale ivory/gold for text on dark */
+
+  --sidebar: var(--secondary);
+  --sidebar-foreground: var(--secondary-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: oklch(0.45 0.01 29);
+  --sidebar-ring: var(--primary);
+
+  /* Alerts / Errors */
+  --destructive: oklch(0.5 0.2 27);           /* USC red variant */
+  --destructive-foreground: oklch(0.97 0 0);  /* light on red */
+
+  /* Focus / Outline Ring */
+  --ring: var(--primary);
+
+  /* Charts */
+  --chart-1: var(--primary);
+  --chart-2: var(--primary-foreground);
+  --chart-3: oklch(0.7 0.02 29);              /* Supporting neutral */
+  --chart-4: oklch(0.3 0.02 29);              /* Slightly darker variant */
+  --chart-5: oklch(0.85 0.03 83);             /* USC-inspired soft gold */
 }
+
+
 
 .dark {
   --background: oklch(0.145 0 0);
