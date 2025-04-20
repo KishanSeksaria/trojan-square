@@ -10,20 +10,27 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from './ui/sidebar'
-import { Search, SquarePen } from 'lucide-react'
+import { SquarePen } from 'lucide-react'
 import ShowTooltip from './ShowTooltip'
-import { useMutation, useQuery } from 'convex/react'
+import { useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { HTMLAttributes } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import CustomIcon from './CustomIcon'
+import { Doc } from '../../convex/_generated/dataModel'
 
-function ChatSidebar({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  const chats = useQuery(api.chats.getAuthenticatedUserChats)
+function ChatSidebar({
+  className,
+  chats,
+  activeChatId,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
+  chats: Doc<'chats'>[] | undefined
+  activeChatId: string | undefined
+}) {
   const createChat = useMutation(api.chats.create)
   const router = useRouter()
-  const { chatId } = useParams()
 
   return (
     <Sidebar variant='inset' className={cn('top-16', className)} {...props}>
@@ -55,7 +62,7 @@ function ChatSidebar({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
             <SidebarMenu>
               {chats?.map(chat => (
                 <SidebarMenuItem key={chat._id}>
-                  <SidebarMenuButton isActive={chat._id === chatId}>
+                  <SidebarMenuButton isActive={chat._id === activeChatId}>
                     <Link href={`/chat/${chat._id}`} className='w-full'>
                       {chat.title}
                     </Link>

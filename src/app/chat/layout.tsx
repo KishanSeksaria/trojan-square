@@ -11,25 +11,41 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 import ShowTooltip from '@/components/ShowTooltip'
+import { useQuery } from 'convex/react'
+import { api } from '../../../convex/_generated/api'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function ChatLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+  const chats = useQuery(api.chats.getAuthenticatedUserChats)
+  const { chatId: activeChatId } = useParams()
+  const [activeChatTitle, setActiveChatTitle] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (chats && activeChatId) {
+      const chat = chats.find(chat => chat._id === activeChatId)
+      if (chat) {
+        setActiveChatTitle(chat.title)
+      } else {
+        setActiveChatTitle(null)
+      }
+    }
+  }, [chats, activeChatId])
+
   return (
     <SidebarProvider className='h-[calc(100vh-4rem)] overflow-y-auto py-8'>
-      <ChatSidebar />
+      <ChatSidebar chats={chats} activeChatId={activeChatId?.toString()} />
       <SidebarInset className='overflow-y-auto'>
-        <NavigationMenu className='bg-background sticky top-0 z-10 w-full flex-0 px-4 shadow-sm'>
-          <NavigationMenuList className='h-12'>
-            <NavigationMenuItem>
-              <ShowTooltip withMessage={`Toggle Sidebar (CMD/CTRL + B)`}>
-                <SidebarTrigger className='rounded-full' />
-              </ShowTooltip>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className='bg-background sticky top-0 z-10 flex min-h-12 w-full items-center gap-2 px-4 shadow-sm'>
+          <ShowTooltip withMessage={`Toggle Sidebar (CMD/CTRL + B)`}>
+            <SidebarTrigger className='rounded-full' />
+          </ShowTooltip>
+          <span>{activeChatTitle}</span>
+        </div>
         <div className='flex w-full flex-1 flex-col items-center justify-center p-2'>
           {children}
         </div>

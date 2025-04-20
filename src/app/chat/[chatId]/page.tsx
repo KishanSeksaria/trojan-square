@@ -9,7 +9,7 @@ import React from 'react'
 async function page({ params }: { params: Promise<{ chatId: string }> }) {
   const { chatId } = await params
   return (
-    <Card className='w-1/2 overflow-auto'>
+    <Card className='w-10/12 overflow-auto'>
       <CardHeader>
         <CardTitle>Welcome to Chat!</CardTitle>
         <CardDescription>Your chat ID is: {chatId}.</CardDescription>
