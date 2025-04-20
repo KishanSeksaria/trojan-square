@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <div className='flex flex-1 flex-col items-center justify-center'>
+          <div className='flex max-h-[calc(100vh-4rem)] flex-1 flex-col items-center justify-center overflow-y-auto'>
             <SignedIn>{children}</SignedIn>
             <SignedOut>
               <h1 className='text-4xl font-bold'>Welcome to Trojan Square!</h1>

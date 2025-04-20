@@ -30,11 +30,11 @@ function ChatSidebar({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
       <SidebarHeader className='flex flex-row items-center justify-between'>
         <p className='font-bold'>Ask USC AI</p>
         <div className='flex items-center gap-0'>
-          <ShowTooltip withMessage='Search your chats'>
+          {/* <ShowTooltip withMessage='Search your chats'>
             <CustomIcon>
               <Search />
             </CustomIcon>
-          </ShowTooltip>
+          </ShowTooltip> */}
           <ShowTooltip withMessage='Start a new chat'>
             <CustomIcon
               onClick={async () => {

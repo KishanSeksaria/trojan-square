@@ -18,10 +18,10 @@ export default function ChatLayout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider className='h-[calc(100vh-4rem)] overflow-y-auto py-8'>
       <ChatSidebar />
       <SidebarInset className='overflow-y-auto'>
-        <NavigationMenu className='bg-background sticky top-0 z-10 w-full flex-0 px-4'>
+        <NavigationMenu className='bg-background sticky top-0 z-10 w-full flex-0 px-4 shadow-sm'>
           <NavigationMenuList className='h-12'>
             <NavigationMenuItem>
               <ShowTooltip withMessage={`Toggle Sidebar (CMD/CTRL + B)`}>
@@ -30,7 +30,7 @@ export default function ChatLayout({
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className='flex h-full w-full flex-1 flex-col items-center justify-center'>
+        <div className='flex w-full flex-1 flex-col items-center justify-center p-2'>
           {children}
         </div>
       </SidebarInset>
