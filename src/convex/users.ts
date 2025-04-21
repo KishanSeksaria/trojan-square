@@ -8,7 +8,7 @@
 import z from 'zod'
 import { zInternalMutation, zQuery } from './utils'
 import { zid } from 'convex-helpers/server/zod'
-import { ClerkUserWebhookSchema } from '../src/lib/zod'
+import { ClerkUserWebhookSchema } from '@/lib/zod'
 import { QueryCtx } from './_generated/server'
 
 /**

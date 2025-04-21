@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/sidebar'
 import ShowTooltip from '@/components/ShowTooltip'
 import { useQuery } from 'convex/react'
-import { api } from '../../../convex/_generated/api'
+import { api } from '@/convex/_generated/api'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 

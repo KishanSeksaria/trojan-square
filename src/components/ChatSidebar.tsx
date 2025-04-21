@@ -13,12 +13,12 @@ import {
 import { SquarePen } from 'lucide-react'
 import ShowTooltip from './ShowTooltip'
 import { useMutation } from 'convex/react'
-import { api } from '../../convex/_generated/api'
+import { api } from '@/convex/_generated/api'
 import { HTMLAttributes } from 'react'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import CustomIcon from './CustomIcon'
-import { Doc } from '../../convex/_generated/dataModel'
+import { Doc } from '@/convex/_generated/dataModel'
 
 function ChatSidebar({
   className,

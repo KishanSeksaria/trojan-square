@@ -1,7 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import { ConvexClientProvider } from './ConvexProvider'
 import { ThemeProvider } from './ThemeProvider'
-import { SidebarProvider } from './ui/sidebar'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
