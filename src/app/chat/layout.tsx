@@ -5,11 +5,6 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '@/components/ui/sidebar'
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList
-} from '@/components/ui/navigation-menu'
 import ShowTooltip from '@/components/ShowTooltip'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'

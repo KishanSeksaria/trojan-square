@@ -1,11 +1,24 @@
+/**
+ * Messages Management Module
+ *
+ * This module provides functions for managing chat messages in the application.
+ * It includes operations for retrieving, creating, and deleting messages,
+ * with appropriate authorization checks to ensure users can only access their own data.
+ */
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
 import { zMutation, zQuery } from './utils'
 import { Id } from './_generated/dataModel'
 import { getAuthenticatedUser } from './users'
 
-// Get all messages for a chat
-export const getByChatId = zQuery({
+/**
+ * Retrieve all messages for a specific chat
+ *
+ * @param chatId - The ID of the chat to get messages for
+ * @returns Array of message objects in ascending order (oldest first)
+ * @throws Error if chat not found or user not authorized to access it
+ */
+export const getAllByChatId = zQuery({
   args: {
     chatId: zid('chats')
   },
@@ -18,6 +31,7 @@ export const getByChatId = zQuery({
 
     const user = await getAuthenticatedUser(ctx)
 
+    // Authorization check: ensure user owns this chat
     if (chat.userId !== user._id) {
       throw new Error('Unauthorized')
     }
@@ -26,14 +40,22 @@ export const getByChatId = zQuery({
     const messages = await ctx.db
       .query('messages')
       .withIndex('by_chatId', q => q.eq('chatId', chatId))
-      .order('asc')
+      .order('asc') // Order by creation time ascending (oldest first)
       .collect()
 
     return messages
   }
 })
 
-// Create a new message
+/**
+ * Create a new message in a chat
+ *
+ * @param chatId - The ID of the chat to add the message to
+ * @param content - The text content of the message
+ * @param role - Whether the message is from the user or the assistant
+ * @returns The ID of the newly created message
+ * @throws Error if chat not found or user not authorized to access it
+ */
 export const create = zMutation({
   args: {
     chatId: zid('chats'),
@@ -49,6 +71,7 @@ export const create = zMutation({
 
     const user = await getAuthenticatedUser(ctx)
 
+    // Authorization check: ensure user owns this chat
     if (chat.userId !== user._id) {
       throw new Error('Unauthorized')
     }
@@ -65,7 +88,12 @@ export const create = zMutation({
   }
 })
 
-// Delete a specific message
+/**
+ * Delete a specific message
+ *
+ * @param id - The ID of the message to delete
+ * @throws Error if message not found, chat not found, or user not authorized
+ */
 export const remove = zMutation({
   args: {
     id: zid('messages')
@@ -84,6 +112,7 @@ export const remove = zMutation({
 
     const user = await getAuthenticatedUser(ctx)
 
+    // Authorization check: ensure user owns the chat containing this message
     if (chat.userId !== user._id) {
       throw new Error('Unauthorized')
     }

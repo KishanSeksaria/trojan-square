@@ -1,10 +1,8 @@
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import Image from 'next/image'
 
 export default function HomePage() {
   return (
-    <div className='min-h-screen overflow-y-auto bg-white font-sans text-black'>
+    <div className='min-h-screen overflow-y-auto font-sans'>
       {/* Navbar */}
       {/* <header className='flex items-center justify-between p-6 shadow-sm'>
         <h1 className='flex items-center gap-2 text-2xl font-bold'>
@@ -30,7 +28,7 @@ export default function HomePage() {
           <h2 className='mb-4 text-4xl font-bold'>
             Your USC Personal Assistant.
           </h2>
-          <p className='mb-6 text-lg text-gray-700'>
+          <p className='text-muted-foreground mb-6 text-lg'>
             Get quick answers on courses, events, and more with an AI-powered
             assistant built for the Trojan Family.
           </p>
