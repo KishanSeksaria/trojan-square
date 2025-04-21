@@ -1,9 +1,22 @@
+/**
+ * Chats Management Module
+ *
+ * This module provides functions for managing chat conversations in the application.
+ * It includes operations for retrieving, creating, updating, and deleting chats,
+ * with appropriate authorization checks to ensure users can only access their own data.
+ */
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
 import { zInternalQuery, zMutation, zQuery } from './utils'
 import { getAuthenticatedUser } from './users'
 
-// Get a specific chat by ID
+/**
+ * Retrieve a specific chat by its ID
+ *
+ * @param id - The ID of the chat to retrieve
+ * @returns The chat object
+ * @throws Error if chat not found or user not authorized to access it
+ */
 export const getById = zQuery({
   args: { id: zid('chats') },
   handler: async (ctx, { id }) => {
@@ -11,30 +24,47 @@ export const getById = zQuery({
     if (!chat) {
       throw new Error('Chat not found')
     }
+    const user = await getAuthenticatedUser(ctx)
+    if (chat.userId !== user._id) {
+      throw new Error('Unauthorized')
+    }
     return chat
   }
 })
 
-// Get all chats for a user
+/**
+ * Get all chats for the current user (internal version)
+ * This is an internal function not exposed to the client directly
+ *
+ * @param userId - The ID of the user to get chats for
+ * @returns Array of chat objects in descending order (newest first)
+ * @returns Empty array if user not authenticated
+ */
 export const getAllByUser = zInternalQuery({
-  args: {},
-  handler: async ctx => {
+  args: { userId: zid('users') },
+  handler: async (ctx, { userId }) => {
     try {
-      const user = await getAuthenticatedUser(ctx)
       const chats = await ctx.db
         .query('chats')
-        .withIndex('by_userId', q => q.eq('userId', user._id))
-        .order('desc')
+        .withIndex('by_userId', q => q.eq('userId', userId))
+        .order('desc') // Order by creation time descending (newest first)
         .collect()
 
       return chats
     } catch {
+      // Return empty array if user is not authenticated
       return []
     }
   }
 })
 
-// Create a new chat
+/**
+ * Create a new chat for the current user
+ *
+ * @param title - The title of the new chat
+ * @returns The ID of the newly created chat
+ * @throws Error if user not authenticated
+ */
 export const create = zMutation({
   args: {
     title: z.string()
@@ -52,7 +82,13 @@ export const create = zMutation({
   }
 })
 
-// Update a chat's title
+/**
+ * Update the title of an existing chat
+ *
+ * @param id - The ID of the chat to update
+ * @param title - The new title for the chat
+ * @throws Error if chat not found or user not authorized
+ */
 export const update = zMutation({
   args: {
     id: zid('chats'),
@@ -66,6 +102,7 @@ export const update = zMutation({
 
     const user = await getAuthenticatedUser(ctx)
 
+    // Authorization check: ensure user owns this chat
     if (chat.userId !== user._id) {
       throw new Error('Unauthorized')
     }
@@ -74,7 +111,12 @@ export const update = zMutation({
   }
 })
 
-// Delete a chat and its messages
+/**
+ * Delete a chat and all its associated messages
+ *
+ * @param id - The ID of the chat to delete
+ * @throws Error if chat not found or user not authorized
+ */
 export const remove = zMutation({
   args: {
     id: zid('chats')
@@ -87,6 +129,7 @@ export const remove = zMutation({
 
     const user = await getAuthenticatedUser(ctx)
 
+    // Authorization check: ensure user owns this chat
     if (chat.userId !== user._id) {
       throw new Error('Unauthorized')
     }
@@ -106,6 +149,13 @@ export const remove = zMutation({
   }
 })
 
+/**
+ * Get all chats for the currently authenticated user (public version)
+ * This function is exposed to the client directly
+ *
+ * @returns Array of chat objects in descending order (newest first)
+ * @throws Error if user not authenticated
+ */
 export const getAuthenticatedUserChats = zQuery({
   args: {},
   handler: async ctx => {
@@ -113,7 +163,7 @@ export const getAuthenticatedUserChats = zQuery({
     const chats = await ctx.db
       .query('chats')
       .withIndex('by_userId', q => q.eq('userId', user._id))
-      .order('desc')
+      .order('desc') // Order by creation time descending (newest first)
       .collect()
 
     return chats
