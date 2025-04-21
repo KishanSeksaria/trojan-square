@@ -1,12 +1,11 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
 
-function AskUSCAI({ children }: { children: React.ReactNode }) {
+function AskUSCAI() {
   // TODO: Improve this page
   return (
     <Card className='w-10/12'>

@@ -4,16 +4,13 @@ import {
   TooltipTrigger,
   TooltipContent
 } from '@radix-ui/react-tooltip'
-import { Button } from './ui/button'
 
 function ShowTooltip({
   children,
-  withMessage: tooltipMessage,
-  onClick
+  withMessage: tooltipMessage
 }: {
   children: React.ReactNode
   withMessage: string
-  onClick?: () => void
 }) {
   return (
     <TooltipProvider>

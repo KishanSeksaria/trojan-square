@@ -8,9 +8,8 @@
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
 import { zInternalMutation, zMutation, zQuery } from './utils'
-import { Doc, Id } from './_generated/dataModel'
+import { Id } from './_generated/dataModel'
 import { getAuthenticatedUser } from './users'
-import { QueryCtx } from './_generated/server'
 
 /**
  * Retrieve all messages for a specific chat

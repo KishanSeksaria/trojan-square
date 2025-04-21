@@ -13,6 +13,8 @@ import { Id } from '@/convex/_generated/dataModel'
 import { useParams } from 'next/navigation'
 import { Message, useChat } from '@ai-sdk/react'
 import { Input } from '@/components/ui/input'
+import MessageBubble from '@/components/MessageBubble'
+import { Separator } from '@/components/ui/separator'
 
 function ChatPage() {
   const { chatId } = useParams()
@@ -29,7 +31,8 @@ function ChatPage() {
     return chatMessages.map(msg => ({
       id: msg._id,
       role: msg.role,
-      content: msg.content
+      content: msg.content,
+      createdAt: new Date(msg.createdAt)
     }))
   }, [chatMessages])
 
@@ -48,26 +51,28 @@ function ChatPage() {
   })
 
   return (
-    <div className='flex h-full w-full flex-col items-center justify-center'>
-      <Card className='w-[400px]'>
+    <div className='flex h-full w-11/12 flex-col items-center justify-center'>
+      <Card className='w-full'>
         <CardHeader>
           <CardTitle>Chat ID</CardTitle>
           <CardDescription>{chatId}</CardDescription>
         </CardHeader>
         <CardContent>
-          {messages?.map((message, index) => (
-            <div key={index} className='mb-2'>
-              <strong>{message.role}:</strong> {message.content}
-            </div>
+          {messages?.map(message => (
+            <React.Fragment key={message.id}>
+              <MessageBubble message={message} />
+              <Separator />
+            </React.Fragment>
           ))}
         </CardContent>
       </Card>
+
       <Input
         value={input}
         onChange={handleInputChange}
-        onKeyDown={e => {
+        onKeyDown={async e => {
           if (e.key === 'Enter') {
-            createMessage({
+            await createMessage({
               chatId: chatId as Id<'chats'>,
               content: input,
               role: 'user'
