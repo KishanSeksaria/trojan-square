@@ -41,6 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --text-fontsize: var(--fontsize);
 }
 
 /* TODO: Add different themes */
@@ -74,6 +75,7 @@
   --sidebar-border: oklch(65% 0.04 78);
   --sidebar-ring: oklch(75% 0.18 65);
   --sidebar: hsl(0 0% 98%);
+  --fontsize: clamp(1.5rem, 5vw, 3rem);
 }
 
 .dark {
@@ -106,6 +108,7 @@
   --sidebar-border: oklch(38% 0.04 78);
   --sidebar-ring: oklch(75% 0.18 65);
   --sidebar: hsl(240 5.9% 10%);
+  --fontsize: clamp(1.5rem, 5vw, 3rem);
 }
 
 /* Gruvbox Theme (https://www.shadcn.studio/) */
@@ -419,3 +422,5 @@
     font-family: var(--font-serif);
   }
 }
+
+
