@@ -49,19 +49,21 @@ export const getAllByChatId = zQuery({
 })
 
 /**
- * Create a new user message in a chat
+ * Create a new message in a chat
  *
  * @param chatId - The ID of the chat to add the message to
  * @param content - The text content of the message
+ * @param role - The role of the message sender ('user' or 'assistant')
  * @returns The ID of the newly created message
  * @throws Error if chat not found or user not authorized
  */
-export const sendUserMessage = zMutation({
+export const create = zMutation({
   args: {
     chatId: zid('chats'),
-    content: z.string()
+    content: z.string(),
+    role: z.enum(['user', 'assistant'])
   },
-  handler: async (ctx, { chatId, content }) => {
+  handler: async (ctx, { chatId, content, role }) => {
     // Verify chat exists and user has access
     const chat = await ctx.db.get(chatId)
     if (!chat) {
@@ -79,7 +81,7 @@ export const sendUserMessage = zMutation({
     const messageId = await ctx.db.insert('messages', {
       chatId,
       content,
-      role: 'user',
+      role,
       createdAt: Date.now()
     })
 
