@@ -7,9 +7,10 @@
  */
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
-import { zMutation, zQuery } from './utils'
-import { Id } from './_generated/dataModel'
+import { zInternalMutation, zMutation, zQuery } from './utils'
+import { Doc, Id } from './_generated/dataModel'
 import { getAuthenticatedUser } from './users'
+import { QueryCtx } from './_generated/server'
 
 /**
  * Retrieve all messages for a specific chat
@@ -48,21 +49,19 @@ export const getAllByChatId = zQuery({
 })
 
 /**
- * Create a new message in a chat
+ * Create a new user message in a chat
  *
  * @param chatId - The ID of the chat to add the message to
  * @param content - The text content of the message
- * @param role - Whether the message is from the user or the assistant
  * @returns The ID of the newly created message
- * @throws Error if chat not found or user not authorized to access it
+ * @throws Error if chat not found or user not authorized
  */
-export const create = zMutation({
+export const sendUserMessage = zMutation({
   args: {
     chatId: zid('chats'),
-    content: z.string(),
-    role: z.enum(['user', 'assistant'])
+    content: z.string()
   },
-  handler: async (ctx, { chatId, content, role }) => {
+  handler: async (ctx, { chatId, content }) => {
     // Verify chat exists and user has access
     const chat = await ctx.db.get(chatId)
     if (!chat) {
@@ -80,7 +79,39 @@ export const create = zMutation({
     const messageId = await ctx.db.insert('messages', {
       chatId,
       content,
-      role,
+      role: 'user',
+      createdAt: Date.now()
+    })
+
+    return messageId
+  }
+})
+
+/**
+ * Create a new assistant message in a chat
+ *
+ * @param chatId - The ID of the chat to add the message to
+ * @param content - The text content of the message
+ * @returns The ID of the newly created message
+ * @throws Error if chat not found or user not authorized
+ */
+export const sendAssistantMessage = zInternalMutation({
+  args: {
+    chatId: zid('chats'),
+    content: z.string()
+  },
+  handler: async (ctx, { chatId, content }) => {
+    // Verify chat exists and user has access
+    const chat = await ctx.db.get(chatId)
+    if (!chat) {
+      throw new Error('Chat not found')
+    }
+
+    // Create message
+    const messageId = await ctx.db.insert('messages', {
+      chatId,
+      content,
+      role: 'assistant',
       createdAt: Date.now()
     })
 
