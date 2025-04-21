@@ -14,7 +14,6 @@ http.route({
     if (!event) {
       return new Response('Error occurred', { status: 400 })
     }
-    console.log('Received Clerk webhook event data', event.data)
     const {
       id: clerkUserId,
       first_name,

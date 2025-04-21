@@ -29,27 +29,19 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning className='h-full'>
       <body
-        className={`${sourceSans.variable} ${sourceSerif.variable} flex h-full min-h-screen flex-col font-sans antialiased`}
+        className={`${sourceSans.variable} ${sourceSerif.variable} flex min-h-screen flex-col antialiased`}
       >
         <Providers>
           <Header />
-          <main className='h-full flex-1'>
-            <SignedIn>
-              <div className='flex h-full flex-col items-center justify-center p-4'>
-                {children}
-              </div>
-            </SignedIn>
+          <div className='flex max-h-[calc(100vh-4rem)] flex-1 flex-col items-center justify-center overflow-y-hidden'>
+            <SignedIn>{children}</SignedIn>
             <SignedOut>
-              <div className='flex h-full flex-col items-center justify-center p-4'>
-                <h1 className='text-4xl font-bold'>
-                  Welcome to Trojan Square!
-                </h1>
-                <p className='text-lg'>
-                  Please sign in to access the application.
-                </p>
-              </div>
+              <h1 className='text-4xl font-bold'>Welcome to Trojan Square!</h1>
+              <p className='text-lg'>
+                Please sign in to access the application.
+              </p>
             </SignedOut>
-          </main>
+          </div>
         </Providers>
       </body>
     </html>
