@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function HomePage() {
   return (
-    <div className='min-h-screen bg-white font-sans text-black'>
+    <div className='min-h-screen overflow-y-auto bg-white font-sans text-black'>
       {/* Navbar */}
       {/* <header className='flex items-center justify-between p-6 shadow-sm'>
         <h1 className='flex items-center gap-2 text-2xl font-bold'>
