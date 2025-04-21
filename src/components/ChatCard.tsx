@@ -1,15 +1,16 @@
-import { HTMLAttributes, ReactElement } from 'react'
+import Image from 'next/image'
 
 function ChatCard({ question, answer }: { question: string; answer: string }) {
   return (
     <div className='rounded-lg border bg-white p-4 shadow-sm'>
       <div className='flex'>
-        <img
-          src='ai_agent.png'
+        <Image
+          src='/ai_agent.png'
+          alt='AI Agent'
           className='mx-2 mt-2 self-start'
           width={20}
           height={20}
-        ></img>
+        />
         <h4 className='mb-2 font-semibold'>{question}</h4>
       </div>
       <hr className='my-4 border-t' />

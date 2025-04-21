@@ -56,7 +56,7 @@ export const getByEmail = zInternalQuery({
     const { email } = args
     const user = await ctx.db
       .query('archivedUsers')
-      .withIndex('by_email', (q: any) => q.eq('email', email))
+      .withIndex('by_email', q => q.eq('email', email))
       .unique()
     return user
   }
@@ -77,9 +77,7 @@ export const getByClerkUserId = zInternalQuery({
     const { clerkUserId } = args
     const user = await ctx.db
       .query('archivedUsers')
-      .withIndex('by_clerk_userId', (q: any) =>
-        q.eq('clerkUserId', clerkUserId)
-      )
+      .withIndex('by_clerk_userId', q => q.eq('clerkUserId', clerkUserId))
       .unique()
     return user
   }

@@ -1,9 +1,8 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import Image from 'next/image'
 import ChatCard, { questionAnswers } from '@/components/ChatCard'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function HomePage() {
   const router = useRouter()
@@ -40,7 +39,7 @@ export default function HomePage() {
           </p>
           <Button
             className='bg-destructive text-accent-foreground'
-            onClick={async => {
+            onClick={() => {
               router.push('/chat')
             }}
           >
@@ -48,7 +47,7 @@ export default function HomePage() {
           </Button>
         </div>
         <div className='relative'>
-          <img
+          <Image
             src='/chatbot-avatar.svg'
             alt='Assistant'
             width={250}
@@ -84,24 +83,30 @@ export default function HomePage() {
             </p>
             <div className='mb-4 grid grid-cols-3 gap-4'>
               <div className='h-[120px] overflow-hidden rounded-md'>
-                <img
-                  src='books.jpg'
+                <Image
+                  src='/books.jpg'
                   alt='Books'
+                  width={200}
+                  height={120}
                   className='h-full w-full object-cover'
                 />
               </div>
               {/* <a href="https://storyset.com/people">People illustrations by Storyset</a> */}
               <div className='h-[120px] overflow-hidden rounded-md'>
-                <img
-                  src='airpods.jpg'
+                <Image
+                  src='/airpods.jpg'
                   alt='Airpods'
+                  width={200}
+                  height={120}
                   className='h-full w-full object-cover'
                 />
               </div>
               <div className='h-[120px] overflow-hidden rounded-md'>
-                <img
-                  src='table_lamp.jpg'
+                <Image
+                  src='/table_lamp.jpg'
                   alt='Table Lamp'
+                  width={200}
+                  height={120}
                   className='h-full w-full object-cover'
                 />
               </div>
