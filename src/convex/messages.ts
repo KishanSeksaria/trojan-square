@@ -10,6 +10,7 @@ import { zid } from 'convex-helpers/server/zod'
 import { zInternalMutation, zMutation, zQuery } from './utils'
 import { Id } from './_generated/dataModel'
 import { getAuthenticatedUser } from './users'
+import { internal } from './_generated/api'
 
 /**
  * Retrieve all messages for a specific chat
@@ -83,6 +84,15 @@ export const create = zMutation({
       role,
       createdAt: Date.now()
     })
+
+    // If this is the first message in the chat, rename the chat
+    if (chat.title === 'New Chat' && role === 'assistant') {
+      await ctx.scheduler.runAfter(0, internal.chats.generateChatTitle, {
+        chatId,
+        userId: user._id,
+        messageContent: content
+      })
+    }
 
     return messageId
   }

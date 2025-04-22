@@ -7,8 +7,17 @@
  */
 import z from 'zod'
 import { zid } from 'convex-helpers/server/zod'
-import { zInternalQuery, zMutation, zQuery } from './utils'
+import {
+  zInternalAction,
+  zInternalMutation,
+  zInternalQuery,
+  zMutation,
+  zQuery
+} from './utils'
 import { getAuthenticatedUser } from './users'
+import { generateObject } from 'ai'
+import { groq } from '@ai-sdk/groq'
+import { internal } from './_generated/api'
 
 /**
  * Retrieve a specific chat by its ID
@@ -18,9 +27,9 @@ import { getAuthenticatedUser } from './users'
  * @throws Error if chat not found or user not authorized to access it
  */
 export const getById = zQuery({
-  args: { id: zid('chats') },
-  handler: async (ctx, { id }) => {
-    const chat = await ctx.db.get(id)
+  args: { chatId: zid('chats') },
+  handler: async (ctx, { chatId }) => {
+    const chat = await ctx.db.get(chatId)
     if (!chat) {
       throw new Error('Chat not found')
     }
@@ -91,11 +100,11 @@ export const create = zMutation({
  */
 export const update = zMutation({
   args: {
-    id: zid('chats'),
+    chatId: zid('chats'),
     title: z.string()
   },
-  handler: async (ctx, { id, title }) => {
-    const chat = await ctx.db.get(id)
+  handler: async (ctx, { chatId, title }) => {
+    const chat = await ctx.db.get(chatId)
     if (!chat) {
       throw new Error('Chat not found')
     }
@@ -107,7 +116,27 @@ export const update = zMutation({
       throw new Error('Unauthorized')
     }
 
-    await ctx.db.patch(id, { title })
+    await ctx.db.patch(chatId, { title })
+  }
+})
+
+export const updateChatTitle = zInternalMutation({
+  args: {
+    chatId: zid('chats'),
+    title: z.string(),
+    userId: zid('users')
+  },
+  handler: async (ctx, { chatId, title, userId }) => {
+    const chat = await ctx.db.get(chatId)
+    if (!chat) {
+      throw new Error('Chat not found')
+    }
+
+    if (chat.userId !== userId) {
+      throw new Error('Unauthorized')
+    }
+
+    await ctx.db.patch(chatId, { title })
   }
 })
 
@@ -119,10 +148,10 @@ export const update = zMutation({
  */
 export const remove = zMutation({
   args: {
-    id: zid('chats')
+    chatId: zid('chats')
   },
-  handler: async (ctx, { id }) => {
-    const chat = await ctx.db.get(id)
+  handler: async (ctx, { chatId }) => {
+    const chat = await ctx.db.get(chatId)
     if (!chat) {
       throw new Error('Chat not found')
     }
@@ -137,7 +166,7 @@ export const remove = zMutation({
     // Delete all messages in the chat
     const messages = await ctx.db
       .query('messages')
-      .withIndex('by_chatId', q => q.eq('chatId', id))
+      .withIndex('by_chatId', q => q.eq('chatId', chatId))
       .collect()
 
     for (const message of messages) {
@@ -145,7 +174,7 @@ export const remove = zMutation({
     }
 
     // Delete the chat
-    await ctx.db.delete(id)
+    await ctx.db.delete(chatId)
   }
 })
 
@@ -167,5 +196,36 @@ export const getAuthenticatedUserChats = zQuery({
       .collect()
 
     return chats
+  }
+})
+
+/**
+ * Generate a chat title based on the provided message content
+ * This function uses Groq's "llama-3.1-8b-instant" model to create a descriptive name for the chat
+ * This is an internal function not exposed to the client directly
+ *
+ * @param messageContent - The message content to base the title on
+ * @returns The generated title for the chat
+ */
+export const generateChatTitle = zInternalAction({
+  args: {
+    chatId: zid('chats'),
+    messageContent: z.string(),
+    userId: zid('users')
+  },
+  handler: async (ctx, { chatId, messageContent, userId }) => {
+    const { object } = await generateObject({
+      model: groq('llama-3.1-8b-instant'),
+      prompt: `The following is starting message for a chat. Generate a short and descriptive title for the chat based on the message content.\n\nMessage: ${messageContent}`,
+      schema: z.object({
+        title: z.string().describe('The generated title for the chat')
+      })
+    })
+
+    await ctx.runMutation(internal.chats.updateChatTitle, {
+      chatId,
+      title: object.title,
+      userId
+    })
   }
 })

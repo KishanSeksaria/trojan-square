@@ -63,7 +63,10 @@ function ChatSidebar({
               {chats?.map(chat => (
                 <SidebarMenuItem key={chat._id}>
                   <SidebarMenuButton isActive={chat._id === activeChatId}>
-                    <Link href={`/chat/${chat._id}`} className='w-full'>
+                    <Link
+                      href={`/chat/${chat._id}`}
+                      className='line-clamp-1 w-full'
+                    >
                       {chat.title}
                     </Link>
                   </SidebarMenuButton>

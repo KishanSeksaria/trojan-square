@@ -3,14 +3,21 @@
  * This file provides type-safe wrappers around Convex's query and mutation functions
  * using zod for validation and Convex Helpers for improved developer experience.
  */
+import { generateText } from 'ai'
 import {
   query,
   mutation,
   internalMutation,
-  internalQuery
+  internalQuery,
+  internalAction
 } from './_generated/server'
 import { NoOp } from 'convex-helpers/server/customFunctions'
-import { zCustomMutation, zCustomQuery } from 'convex-helpers/server/zod'
+import {
+  zCustomMutation,
+  zCustomQuery,
+  zCustomAction
+} from 'convex-helpers/server/zod'
+import { groq } from '@ai-sdk/groq'
 
 /**
  * Creates a type-safe, zod-validated public query function
@@ -35,3 +42,9 @@ export const zInternalQuery = zCustomQuery(internalQuery, NoOp)
  * These mutations are only accessible from other Convex functions (not from clients)
  */
 export const zInternalMutation = zCustomMutation(internalMutation, NoOp)
+
+/**
+ * Creates a type-safe, zod-validated internal action function
+ * These actions are only accessible from other Convex functions (not from clients)
+ */
+export const zInternalAction = zCustomAction(internalAction, NoOp)
