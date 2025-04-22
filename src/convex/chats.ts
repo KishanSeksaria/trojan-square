@@ -216,10 +216,11 @@ export const generateChatTitle = zInternalAction({
   handler: async (ctx, { chatId, messageContent, userId }) => {
     const { object } = await generateObject({
       model: groq('llama-3.1-8b-instant'),
-      prompt: `The following is starting message for a chat. Generate a short and descriptive title for the chat based on the message content.\n\nMessage: ${messageContent}`,
+      prompt: `The following is starting message for a chat. Generate a short and descriptive title for the chat based on the message content. Try to make it catchy and include the subject at the beginning.\n\nMessage: ${messageContent}`,
       schema: z.object({
         title: z.string().describe('The generated title for the chat')
-      })
+      }),
+      temperature: 0.7
     })
 
     await ctx.runMutation(internal.chats.updateChatTitle, {

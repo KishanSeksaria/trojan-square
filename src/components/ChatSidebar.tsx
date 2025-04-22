@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import CustomIcon from './CustomIcon'
 import { Doc } from '@/convex/_generated/dataModel'
+import { TextGenerateEffect } from './ui/text-generate-effect'
 
 function ChatSidebar({
   className,
@@ -62,12 +63,16 @@ function ChatSidebar({
             <SidebarMenu>
               {chats?.map(chat => (
                 <SidebarMenuItem key={chat._id}>
-                  <SidebarMenuButton isActive={chat._id === activeChatId}>
-                    <Link
-                      href={`/chat/${chat._id}`}
-                      className='line-clamp-1 w-full'
-                    >
-                      {chat.title}
+                  <SidebarMenuButton
+                    asChild
+                    isActive={chat._id === activeChatId}
+                  >
+                    <Link href={`/chat/${chat._id}`}>
+                      {/* <TextGenerateEffect
+                        words={chat.title}
+                        className='line-clamp-1'
+                      /> */}
+                      <p className='line-clamp-1'>{chat.title}</p>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

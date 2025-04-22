@@ -8,25 +8,6 @@ export default function HomePage() {
   const router = useRouter()
   return (
     <div className='min-h-screen overflow-y-auto font-sans text-black'>
-      {/* Navbar */}
-      {/* <header className='flex items-center justify-between p-6 shadow-sm'>
-        <h1 className='flex items-center gap-2 text-2xl font-bold'>
-          <Image
-            src='/icons/trojan-logo.svg'
-            alt='Trojan Logo'
-            width={32}
-            height={32}
-          />
-          TROJAN SQUARE
-        </h1>
-        <nav className='flex gap-6 text-sm'>
-          <Link href='#features'>Features</Link>
-        </nav>
-        <Button className='bg-yellow-400 text-black hover:bg-yellow-500'>
-          Try It Now
-        </Button>
-      </header> */}
-
       {/* Hero Section */}
       <section className='grid items-center gap-8 px-8 py-16 md:grid-cols-2'>
         <div>
@@ -38,7 +19,7 @@ export default function HomePage() {
             assistant built for the Trojan Family.
           </p>
           <Button
-            className='bg-destructive text-accent-foreground'
+            variant={'destructive'}
             onClick={() => {
               router.push('/chat')
             }}

@@ -8,13 +8,7 @@ import {
   UserButton
 } from '@clerk/nextjs'
 import { ModeToggle } from './ui/mode-toggle'
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle
-} from './ui/navigation-menu'
+import Navigation from './Navigation'
 import { navigationItems } from '@/config/navigation'
 import { Button } from './ui/button'
 
@@ -63,28 +57,5 @@ function Header() {
     </header>
   )
 }
-
-const Navigation = ({
-  navigationItems
-}: {
-  navigationItems: {
-    title: string
-    href: string
-  }[]
-}) => (
-  <NavigationMenu>
-    <NavigationMenuList>
-      {navigationItems.map(({ href, title }) => (
-        <NavigationMenuItem key={href}>
-          <Link href={href} legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {title}
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      ))}
-    </NavigationMenuList>
-  </NavigationMenu>
-)
 
 export default Header

@@ -3,7 +3,6 @@
  * This file provides type-safe wrappers around Convex's query and mutation functions
  * using zod for validation and Convex Helpers for improved developer experience.
  */
-import { generateText } from 'ai'
 import {
   query,
   mutation,
@@ -17,7 +16,6 @@ import {
   zCustomQuery,
   zCustomAction
 } from 'convex-helpers/server/zod'
-import { groq } from '@ai-sdk/groq'
 
 /**
  * Creates a type-safe, zod-validated public query function
