@@ -8,7 +8,7 @@ import { tools } from './tools'
  * @param messages - Array of chat messages
  * @returns A stream of text responses from the AI model
  */
-export async function generateChatResponse(messages: Message[]) {
+export async function generateStreamingChatResponse(messages: Message[]) {
   return streamText({
     model: groq('meta-llama/llama-4-scout-17b-16e-instruct'),
     system: getSystemMessage(),
