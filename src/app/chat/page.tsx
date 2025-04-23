@@ -1,22 +1,36 @@
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useMutation } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function AskUSCAI() {
-  // TODO: Improve this page
+  const router = useRouter()
+  const createChat = useMutation(api.chats.create)
+
+  useEffect(() => {
+    const createNewChat = async () => {
+      try {
+        const chatId = await createChat({ title: 'New Chat' })
+        router.push(`/chat/${chatId}`)
+      } catch (error) {
+        console.error('Error creating chat:', error)
+      }
+    }
+
+    void createNewChat()
+  }, [router])
+
   return (
-    <Card className='w-10/12'>
-      <CardHeader>
-        <CardTitle>Welcome to Ask USC AI!</CardTitle>
-        <CardDescription>
-          Start a new chat or select an existing one from the sidebar to get
-          started.
-        </CardDescription>
-      </CardHeader>
-    </Card>
+    <div className='flex items-center space-x-4'>
+      <Skeleton className='h-12 w-12 rounded-full' />
+      <div className='space-y-2'>
+        <Skeleton className='h-4 w-[250px]' />
+        <Skeleton className='h-4 w-[200px]' />
+      </div>
+    </div>
   )
 }
 

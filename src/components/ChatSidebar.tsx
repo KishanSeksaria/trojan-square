@@ -30,6 +30,7 @@ function ChatSidebar({
   activeChatId: string | undefined
 }) {
   const createChat = useMutation(api.chats.create)
+  // const deleteChat = useMutation(api.chats.remove)
   const router = useRouter()
 
   return (
@@ -62,11 +63,47 @@ function ChatSidebar({
             <SidebarMenu>
               {chats?.map(chat => (
                 <SidebarMenuItem key={chat._id}>
-                  <SidebarMenuButton isActive={chat._id === activeChatId}>
-                    <Link href={`/chat/${chat._id}`} className='w-full'>
-                      {chat.title}
-                    </Link>
-                  </SidebarMenuButton>
+                  <div className='flex w-full items-center gap-2'>
+                    <SidebarMenuButton isActive={chat._id === activeChatId}>
+                      <Link href={`/chat/${chat._id}`} className='w-full'>
+                        {chat.title}
+                      </Link>
+                    </SidebarMenuButton>
+                    {/* <CustomIcon
+                      onClick={() => {
+                        const isCurrentChat = activeChatId === chat._id
+                        deleteChat({ id: chat._id })
+                        // Only redirect if we're deleting the current chat
+                        if (isCurrentChat) {
+                          // Find the next available chat to redirect to
+                          const remainingChats =
+                            chats?.filter(c => c._id !== chat._id) || []
+                          if (remainingChats.length > 0) {
+                            router.push(`/chat/${remainingChats[0]._id}`)
+                          } else {
+                            router.push('/')
+                          }
+                        }
+                      }}
+                      className='hover:text-red-500'
+                    >
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      >
+                        <path d='M3 6h18'></path>
+                        <path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6'></path>
+                        <path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2'></path>
+                      </svg>
+                    </CustomIcon> */}
+                  </div>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
