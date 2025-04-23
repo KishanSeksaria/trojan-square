@@ -1,20 +1,32 @@
-import { cn } from '@/lib/utils'
 import { Message } from 'ai'
+import React from 'react'
 
-// TODO: Fix UI later, this is just a placeholder
 function MessageBubble({ message }: { message: Message }) {
-  return (
-    <div
-      className={cn('p-2', message.role === 'user' ? 'text-end' : 'text-start')}
-    >
-      <p>
-        <strong>{message.role}:</strong> {message.content}
-      </p>
-      <span className='text-sm text-gray-500'>
-        {message.createdAt?.toLocaleTimeString()}
-      </span>
-    </div>
-  )
+  if (message.role === 'assistant') {
+    return (
+      <React.Fragment>
+        <div className='bg-secondary before:border-r-secondary before:border-b-secondary relative max-w-[60%] self-start rounded-lg p-2 text-sm before:absolute before:bottom-0 before:left-[-8px] before:border-8 before:border-transparent'>
+          <p className='text-secondary-foreground'>
+            {message.content.split('</think>')[1]}
+          </p>
+        </div>
+        <span className='text-foreground self-start text-sm'>
+          {message.createdAt?.toLocaleTimeString()}
+        </span>
+      </React.Fragment>
+    )
+  } else {
+    return (
+      <React.Fragment>
+        <div className='bg-accent before:border-l-accent before:border-b-accent relative max-w-[60%] self-end rounded-lg p-2 text-sm before:absolute before:right-[-8px] before:bottom-0 before:border-8 before:border-transparent'>
+          <p>{message.content}</p>
+        </div>
+        <span className='text-foreground self-end text-sm'>
+          {message.createdAt?.toLocaleTimeString()}
+        </span>
+      </React.Fragment>
+    )
+  }
 }
 
 export default MessageBubble
