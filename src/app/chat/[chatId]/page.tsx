@@ -15,6 +15,7 @@ import { Message, useChat } from '@ai-sdk/react'
 import { Input } from '@/components/ui/input'
 import MessageBubble from '@/components/MessageBubble'
 import { Separator } from '@/components/ui/separator'
+import { OnFinishOptions } from '@/lib/types'
 
 function ChatPage() {
   const { chatId } = useParams()
@@ -40,14 +41,17 @@ function ChatPage() {
     id: chatId?.toString(),
     initialMessages: transformedMessages,
     maxSteps: 3,
-    onFinish: async (message: Message) => {
+    onFinish: async (message: Message, options: OnFinishOptions) => {
       // Handle the message after it is sent
       console.log('Message received from assistant:', message)
-      await createMessage({
-        chatId: chatId as Id<'chats'>,
-        content: message.content,
-        role: 'assistant'
-      })
+      console.log('Options received:', options)
+      if (options.finishReason === 'stop') {
+        await createMessage({
+          chatId: chatId as Id<'chats'>,
+          content: message.content,
+          role: 'assistant'
+        })
+      }
     }
   })
 
