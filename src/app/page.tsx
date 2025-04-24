@@ -9,6 +9,7 @@ export default function HomePage() {
   const router = useRouter()
   return (
     <div className='min-h-screen overflow-y-auto font-sans text-black'>
+      {/* Hero Section */}
       <section className='grid items-center gap-8 px-8 py-16 md:grid-cols-2'>
         <div>
           <h2 className='text-foreground text-fontsize mb-4 font-bold'>
@@ -19,7 +20,7 @@ export default function HomePage() {
             assistant built for the Trojan Family.
           </p>
           <Button
-            className='bg-destructive text-accent-foreground'
+            variant={'destructive'}
             onClick={() => {
               router.push('/chat')
             }}
