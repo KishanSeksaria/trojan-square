@@ -19,9 +19,8 @@ function Header() {
         {/* Logo and Navigation  */}
         <div className='flex items-center gap-2 md:gap-4'>
           <Link href='/' className='flex items-center gap-2'>
-            {/* TODO: Change Logo */}
-            <Image src='/globe.svg' alt='Logo' width={24} height={24} />
-            <span className='text-sm font-bold md:text-base'>
+            <Image src='/logo.png' alt='Logo' width={30} height={30} />
+            <span className='hidden font-bold sm:inline-block'>
               Trojan Square
             </span>
           </Link>

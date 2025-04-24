@@ -1,8 +1,9 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import ChatCard, { questionAnswers } from '@/components/ChatCard'
+
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import ChatCard, { questionAnswers } from '@/components/ChatCard'
 
 export default function HomePage() {
   const router = useRouter()
@@ -38,8 +39,6 @@ export default function HomePage() {
           {/* <a href="https://storyset.com/online">Online illustrations by Storyset</a> */}
         </div>
       </section>
-
-      {/* Features Section */}
       <section id='features' className='px-8 py-12'>
         <h3 className='mb-6 text-2xl font-bold'>Features</h3>
         <div className='grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:grid-cols-2'>
