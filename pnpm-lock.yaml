@@ -90,8 +90,8 @@ importers:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       onnxruntime-node:
-        specifier: ^1.21.1
-        version: 1.21.1
+        specifier: 1.21.0
+        version: 1.21.0
       pgvector:
         specifier: ^0.2.0
         version: 0.2.0
@@ -2731,9 +2731,6 @@ packages:
   onnxruntime-common@1.21.0:
     resolution: {integrity: sha512-Q632iLLrtCAVOTO65dh2+mNbQir/QNTVBG3h/QdZBpns7mZ0RYbLRBgGABPbpU9351AgYy7SJf1WaeVwMrBFPQ==}
 
-  onnxruntime-common@1.21.1:
-    resolution: {integrity: sha512-E0q8+fMyJ+F8dvlwVsXcujrOc96lkPIDAZh3p6pjrZS4bzjowIcUMv48W5zOcFLtlWyycUlRPJWUUK2+3IL1eA==}
-
   onnxruntime-common@1.22.0-dev.20250409-89f8206ba4:
     resolution: {integrity: sha512-vDJMkfCfb0b1A836rgHj+ORuZf4B4+cc2bASQtpeoJLueuFc5DuYwjIZUBrSvx/fO5IrLjLz+oTrB3pcGlhovQ==}
 
@@ -2743,10 +2740,6 @@ packages:
 
   onnxruntime-node@1.21.0:
     resolution: {integrity: sha512-NeaCX6WW2L8cRCSqy3bInlo5ojjQqu2fD3D+9W5qb5irwxhEyWKXeH2vZ8W9r6VxaMPUan+4/7NDwZMtouZxEw==}
-    os: [win32, darwin, linux]
-
-  onnxruntime-node@1.21.1:
-    resolution: {integrity: sha512-YThL/YYeGAeytecOvRcTKUORTIE2f8/iSo/JZgHFawWrV4zOY7fWLEaNuscgjmY5C5/VE/Wr7tm+ucSsc/AysQ==}
     os: [win32, darwin, linux]
 
   onnxruntime-web@1.14.0:
@@ -5931,8 +5924,6 @@ snapshots:
 
   onnxruntime-common@1.21.0: {}
 
-  onnxruntime-common@1.21.1: {}
-
   onnxruntime-common@1.22.0-dev.20250409-89f8206ba4: {}
 
   onnxruntime-node@1.14.0:
@@ -5944,12 +5935,6 @@ snapshots:
     dependencies:
       global-agent: 3.0.0
       onnxruntime-common: 1.21.0
-      tar: 7.4.3
-
-  onnxruntime-node@1.21.1:
-    dependencies:
-      global-agent: 3.0.0
-      onnxruntime-common: 1.21.1
       tar: 7.4.3
 
   onnxruntime-web@1.14.0:
