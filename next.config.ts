@@ -7,9 +7,13 @@ const nextConfig: NextConfig = {
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.externals = {
-        ...(config.externals || {}),
-        'onnxruntime-node': 'commonjs onnxruntime-node'
+      if (Array.isArray(config.externals)) {
+        config.externals = [
+          ...config.externals,
+          { 'onnxruntime-node': 'commonjs onnxruntime-node' }
+        ]
+      } else {
+        config.externals = ['onnxruntime-node']
       }
     }
     return config

@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import CustomIcon from './CustomIcon'
 import { Doc } from '@/convex/_generated/dataModel'
-import { TextGenerateEffect } from './ui/text-generate-effect'
+// import { TextGenerateEffect } from './ui/text-generate-effect'
 
 function ChatSidebar({
   className,
