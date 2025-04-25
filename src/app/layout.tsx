@@ -34,14 +34,10 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <div className='flex max-h-[calc(100vh-4rem)] flex-1 flex-col items-center justify-center overflow-y-hidden'>
+          <div className='flex max-h-[calc(100vh-var(--height-header))] flex-1 flex-col items-center justify-center overflow-y-hidden'>
             <SignedIn>{children}</SignedIn>
             <SignedOut>
-              {/* <h1 className='text-4xl font-bold'>Welcome to Trojan Square!</h1>
-              <p className='text-lg'>
-                Please sign in to access the application.
-              </p> */}
-              <HeroSection />
+              <SignedOutMessage />
             </SignedOut>
           </div>
         </Providers>
@@ -50,25 +46,22 @@ export default function RootLayout({
   )
 }
 
-export function HeroSection() {
+export function SignedOutMessage() {
   return (
-    <section className='flex min-h-[80vh] flex-col items-center justify-center px-4 text-center'>
-      <div>
-        <Image
-          src='/logo.png' // use your Trojan logo SVG path
-          alt='Trojan Logo'
-          width={500}
-          height={500}
-          className='mx-auto'
-        />
-      </div>
-
+    <section className='flex flex-col items-center justify-center px-4 text-center'>
+      <Image
+        src='/logo.png'
+        alt='Trojan Square Logo'
+        width={500}
+        height={500}
+        className='mx-auto'
+      />
       <p className='mt-4 text-xl font-medium'>Your USC Personal Assistant</p>
       <p className='mt-2 max-w-xl text-base font-light'>
         Find courses, events, and campus essentials. Tailored for the Trojan
         Family.
       </p>
-      <p className='mt-2 max-w-xl text-base text-sm font-light'>
+      <p className='mt-2 max-w-xl text-base font-light'>
         Please sign in to access the application
       </p>
     </section>

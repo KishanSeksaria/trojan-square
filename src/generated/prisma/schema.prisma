@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("KNOWLEDGE_BASE_URL")
+  extensions = [vector, pgvector]
+}
+
+// Page model for USC website content with vector embeddings
+model Page {
+  id           BigInt                      @id @default(autoincrement())
+  url          String
+  chunk_index  Int
+  content_hash String
+  raw_text     String
+  embedding    Unsupported("vector(1536)")
+  last_updated DateTime                    @default(now()) @updatedAt
+
+  @@index([url, chunk_index], name: "idx_url_chunk")
+  @@index([content_hash], name: "idx_content_hash")
+  @@map("pages")
+}

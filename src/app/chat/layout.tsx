@@ -39,7 +39,8 @@ export default function ChatLayout({
           <ShowTooltip withMessage={`Toggle Sidebar (CMD/CTRL + B)`}>
             <SidebarTrigger className='rounded-full' />
           </ShowTooltip>
-          <span>{activeChatTitle}</span>
+          {/* <TextGenerateEffect words={activeChatTitle ?? ''} /> */}
+          <p>{activeChatTitle ?? 'No active chat'}</p>
         </div>
         <div className='flex w-full flex-1 flex-col items-center justify-center p-2'>
           {children}

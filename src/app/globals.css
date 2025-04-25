@@ -42,6 +42,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --text-fontsize: var(--fontsize);
+  --height-header: 4rem;
 }
 
 /* TODO: Add different themes */
