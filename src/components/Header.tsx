@@ -15,7 +15,7 @@ import { Button } from './ui/button'
 function Header() {
   return (
     <header className='bg-background sticky top-0 z-50 w-full shadow-sm'>
-      <nav className='flex h-16 items-center justify-between px-4'>
+      <nav className='h-header flex items-center justify-between px-4'>
         {/* Logo and Navigation  */}
         <div className='flex items-center gap-2 md:gap-4'>
           <Link href='/' className='flex items-center gap-2'>
