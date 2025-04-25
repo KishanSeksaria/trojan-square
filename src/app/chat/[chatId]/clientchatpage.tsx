@@ -36,6 +36,7 @@ export default function ClientChatPage() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     id: chatId?.toString(),
     initialMessages: transformedMessages,
+    maxSteps: 3,
     onFinish: async (message: Message) => {
       // Handle the message after it is sent
       console.log('Message sent:', message)

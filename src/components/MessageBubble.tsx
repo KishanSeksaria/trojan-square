@@ -6,8 +6,14 @@ function MessageBubble({ message }: { message: Message }) {
     return (
       <React.Fragment>
         <div className='bg-secondary before:border-r-secondary before:border-b-secondary relative max-w-[60%] self-start rounded-lg p-2 text-sm before:absolute before:bottom-0 before:left-[-8px] before:border-8 before:border-transparent'>
-          <p className='text-secondary-foreground'>
-            {message.content.split('</think>')[1]}
+          <p>
+            {message.content.length > 0 ? (
+              message.content
+            ) : (
+              <span className='font-light italic'>
+                {'calling tool: ' + message?.toolInvocations?.[0].toolName}
+              </span>
+            )}
           </p>
         </div>
         <span className='text-foreground self-start text-sm'>

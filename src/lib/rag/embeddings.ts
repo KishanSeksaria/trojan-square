@@ -26,7 +26,8 @@ async function getEmbedder(): Promise<FeatureExtractionPipeline> {
         env.wasm.numThreads = 1
 
         const embedder = await pipeline('feature-extraction', modelPath, {
-          local_files_only: true
+          local_files_only: true,
+          dtype: 'fp16'
         })
         return embedder as FeatureExtractionPipeline
       } catch (error) {
