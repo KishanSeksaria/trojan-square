@@ -87,8 +87,8 @@ importers:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       onnxruntime-node:
-        specifier: ^1.21.1
-        version: 1.21.1
+        specifier: 1.21.0
+        version: 1.21.0
       pgvector:
         specifier: ^0.2.0
         version: 0.2.0
@@ -2613,10 +2613,6 @@ packages:
 
   onnxruntime-node@1.21.0:
     resolution: {integrity: sha512-NeaCX6WW2L8cRCSqy3bInlo5ojjQqu2fD3D+9W5qb5irwxhEyWKXeH2vZ8W9r6VxaMPUan+4/7NDwZMtouZxEw==}
-    os: [win32, darwin, linux]
-
-  onnxruntime-node@1.21.1:
-    resolution: {integrity: sha512-YThL/YYeGAeytecOvRcTKUORTIE2f8/iSo/JZgHFawWrV4zOY7fWLEaNuscgjmY5C5/VE/Wr7tm+ucSsc/AysQ==}
     os: [win32, darwin, linux]
 
   onnxruntime-web@1.14.0:
@@ -5633,12 +5629,6 @@ snapshots:
     dependencies:
       global-agent: 3.0.0
       onnxruntime-common: 1.21.0
-      tar: 7.4.3
-
-  onnxruntime-node@1.21.1:
-    dependencies:
-      global-agent: 3.0.0
-      onnxruntime-common: 1.21.1
       tar: 7.4.3
 
   onnxruntime-web@1.14.0:
