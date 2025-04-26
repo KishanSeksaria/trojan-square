@@ -14,10 +14,10 @@ export async function generateStreamingChatResponse(messages: Message[]) {
   return streamText({
     // model: groq('meta-llama/llama-4-scout-17b-16e-instruct'),
     // model: openai('gpt-3.5-turbo'),
-    // model: google('gemini-2.0-flash-001', {
-    //   useSearchGrounding: true
-    // }),
-    model: google('gemini-2.0-flash-001'),
+    model: google('gemini-2.0-flash-001', {
+      useSearchGrounding: true
+    }),
+    // model: google('gemini-2.0-flash-001'),
     system: SYSTEM_MESSAGE,
     messages,
     tools,
