@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <div className='flex max-h-[calc(100vh-var(--height-header))] flex-1 flex-col items-center justify-center overflow-y-hidden'>
+          <div className='flex max-h-[calc(100vh-var(--height-header))] flex-1 flex-col items-center justify-center'>
             <SignedIn>{children}</SignedIn>
             <SignedOut>
               <SignedOutMessage />

@@ -1,13 +1,12 @@
 import { Metadata } from 'next'
-import ClientChatPage from './clientchatpage'
-type Props = {
-  params: Promise<{ chatId: string }>
-}
+import ClientChatPage from './client-chat-page'
 
 // Metadata for the chat page
 export const generateMetadata = async ({
   params
-}: Props): Promise<Metadata> => {
+}: {
+  params: Promise<{ chatId: string }>
+}): Promise<Metadata> => {
   const { chatId } = await params
   return {
     title: `Chat ${chatId} | Trojan Square`,

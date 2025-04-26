@@ -76,5 +76,5 @@ export const webSearchTool = tool({
 
 export const tools = {
   // searchKnowledgeBase: ragTool,
-  webSearch: webSearchTool
+  // webSearch: webSearchTool
 }
