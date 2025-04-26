@@ -1,9 +1,9 @@
 import {
-  TooltipProvider,
   Tooltip,
-  TooltipTrigger,
-  TooltipContent
-} from '@radix-ui/react-tooltip'
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from './ui/tooltip'
 
 function ShowTooltip({
   children,
@@ -16,10 +16,7 @@ function ShowTooltip({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent
-          side='bottom'
-          className='bg-background mt-2 overflow-hidden rounded-2xl p-2'
-        >
+        <TooltipContent side='bottom'>
           <p>{tooltipMessage}</p>
         </TooltipContent>
       </Tooltip>

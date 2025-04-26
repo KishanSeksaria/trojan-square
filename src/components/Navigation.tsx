@@ -10,7 +10,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from './ui/sheet'
 import { Button } from './ui/button'
 
 const Navigation = ({
@@ -36,6 +36,7 @@ const Navigation = ({
             </Button>
           </SheetTrigger>
           <SheetContent side='left' className='w-[240px] sm:w-[300px]'>
+            <SheetTitle className='sr-only'>Navigation Menu</SheetTitle>
             <nav className='mt-8 flex flex-col gap-4'>
               {navigationItems.map(({ href, title }) => (
                 <Link

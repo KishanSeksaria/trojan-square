@@ -1,21 +1,31 @@
 import Image from 'next/image'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from './ui/card'
 
 function ChatCard({ question, answer }: { question: string; answer: string }) {
   return (
-    <div className='rounded-lg border bg-white p-4 shadow-sm'>
-      <div className='flex'>
-        <Image
-          src='/ai_agent.png'
-          alt='AI Agent'
-          className='mx-2 mt-2 self-start'
-          width={20}
-          height={20}
-        />
-        <h4 className='mb-2 font-semibold'>{question}</h4>
-      </div>
-      <hr className='my-4 border-t' />
-      <p className='text-input text-sm'>{answer}</p>
-    </div>
+    <Card className='hover:bg-accent/50 transition-colors'>
+      <CardHeader className='gap-2'>
+        <CardTitle className='text-base font-medium'>{question}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className='flex items-center gap-2'>
+          <Image
+            src='/ai_agent.png'
+            alt='AI Agent'
+            className='size-5'
+            width={20}
+            height={20}
+          />
+          <CardDescription>{answer}</CardDescription>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
