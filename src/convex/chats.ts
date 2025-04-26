@@ -214,23 +214,44 @@ export const generateChatTitle = zInternalAction({
     userId: zid('users')
   },
   handler: async (ctx, { chatId, messageContent, userId }) => {
-    const { object } = await generateObject({
-      model: groq('llama-3.1-8b-instant'),
-      prompt: `Generate a concise and descriptive chat title based on this message. The title must be between 10 and 35 characters long.\n\nMessage: "${messageContent}"\n\nRespond with a title that captures the main topic or purpose of the conversation. Be direct and specific.`,
-      schema: z.object({
-        title: z
-          .string()
-          .min(10)
-          .max(35)
-          .describe('A concise, descriptive title for the chat')
-      }),
-      temperature: 0.3 // Lower temperature for more consistent output
-    })
+    try {
+      const { object } = await generateObject({
+        model: groq('llama-3.1-8b-instant'),
+        prompt: `You must create a concise and descriptive chat title based on this message. The title MUST be between 10 and 35 characters long, no exceptions.
 
-    await ctx.runMutation(internal.chats.updateChatTitle, {
-      chatId,
-      title: object.title,
-      userId
-    })
+Message: "${messageContent}"
+
+Respond with ONLY a title that captures the main topic or purpose of the conversation. Be direct and specific. Count the characters carefully to ensure it is between 10-35 characters.`,
+        schema: z.object({
+          title: z
+            .string()
+            .min(10)
+            .max(35)
+            .describe('A concise, descriptive title for the chat')
+        }),
+        temperature: 0.3 // Lower temperature for more consistent output
+      })
+
+      await ctx.runMutation(internal.chats.updateChatTitle, {
+        chatId,
+        title: object.title,
+        userId
+      })
+    } catch (error) {
+      console.error('Error generating chat title:', error)
+      // Create a fallback title from the first 30 chars of the message
+      const fallbackTitle =
+        messageContent.length > 30
+          ? messageContent.substring(0, 27) + '...'
+          : messageContent.length < 10
+            ? messageContent + ' conversation'
+            : messageContent
+
+      await ctx.runMutation(internal.chats.updateChatTitle, {
+        chatId,
+        title: fallbackTitle,
+        userId
+      })
+    }
   }
 })

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, stagger, useAnimate } from 'motion/react'
 import { cn } from '@/lib/utils'
 
@@ -9,54 +9,58 @@ export const TextGenerateEffect = ({
   filter = true,
   duration = 0.5
 }: {
-  words: string | null
+  words: string
   className?: string
   filter?: boolean
   duration?: number
 }) => {
   const [scope, animate] = useAnimate()
-  const letters = words ? words.split('') : ['']
+  // Use a state to force re-renders
+  const [key, setKey] = useState(0)
 
-  // Add words to the dependency array so the effect runs when words changes
   useEffect(() => {
-    if (!scope.current) return
+    // Force component re-render when words change
+    setKey(prev => prev + 1)
 
-    animate(
-      'span',
-      {
-        opacity: 1,
-        filter: filter ? 'blur(0px)' : 'none'
-      },
-      {
-        duration: duration ? duration : 1,
-        delay: stagger(0.05)
-      }
-    )
-  }, [words]) // Include all dependencies
+    // Small timeout to ensure DOM is ready before animation
+    const timeout = setTimeout(() => {
+      animate(
+        'span',
+        {
+          opacity: 1,
+          filter: filter ? 'blur(0px)' : 'none'
+        },
+        {
+          duration: duration ? duration : 0.2,
+          delay: stagger(0.025)
+        }
+      )
+    }, 10)
 
-  const renderWords = () => {
-    return (
-      <motion.div ref={scope}>
-        {letters.map((letter, idx) => {
-          return (
-            <motion.span
-              key={`${letter}-${idx}-${words}`} // Add words to the key for proper re-rendering
-              style={{
-                // opacity: 0, // Start with opacity 0
-                filter: filter ? 'blur(10px)' : 'none'
-              }}
-            >
-              {letter}
-            </motion.span>
-          )
-        })}
-      </motion.div>
-    )
-  }
+    return () => clearTimeout(timeout)
+  }, [words, filter, duration])
+
+  const letters = words.split('')
 
   return (
     <div className={cn(className)}>
-      <div className='leading-snug tracking-wide'>{renderWords()}</div>
+      <div className='leading-snug tracking-wide'>
+        <motion.div ref={scope} key={key}>
+          {letters.map((letter, idx) => {
+            return (
+              <motion.span
+                key={idx}
+                className='opacity-0'
+                style={{
+                  filter: filter ? 'blur(10px)' : 'none'
+                }}
+              >
+                {letter}
+              </motion.span>
+            )
+          })}
+        </motion.div>
+      </div>
     </div>
   )
 }

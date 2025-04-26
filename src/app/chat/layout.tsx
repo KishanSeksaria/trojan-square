@@ -10,6 +10,7 @@ import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
 
 export default function ChatLayout({
   children
@@ -39,7 +40,7 @@ export default function ChatLayout({
           <ShowTooltip withMessage={`Toggle Sidebar (CMD/CTRL + B)`}>
             <SidebarTrigger className='rounded-full' />
           </ShowTooltip>
-          <p>{activeChatTitle ?? 'No active chat'}</p>
+          <TextGenerateEffect words={activeChatTitle ?? 'No active chat'} />
         </div>
         <div className='flex w-full flex-1 flex-col items-center justify-center'>
           {children}

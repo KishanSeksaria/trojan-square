@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { TextGenerateEffect } from './ui/text-generate-effect'
 
 // import { TextGenerateEffect } from './ui/text-generate-effect'
 
@@ -80,7 +81,7 @@ function ChatSidebar({
                     isActive={chat._id === activeChatId}
                   >
                     <Link href={`/chat/${chat._id}`}>
-                      <p className='line-clamp-1'>{chat.title}</p>
+                      <TextGenerateEffect words={chat.title} />
                     </Link>
                   </SidebarMenuButton>
                   <AlertDialog>
@@ -106,9 +107,11 @@ function ChatSidebar({
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={async () => {
-                            await deleteChat({ chatId: chat._id })
-                            router.push('/chat')
+                          onClick={() => {
+                            deleteChat({ chatId: chat._id })
+                            if (chat._id === activeChatId) {
+                              router.push('/chat')
+                            }
                           }}
                         >
                           Continue
