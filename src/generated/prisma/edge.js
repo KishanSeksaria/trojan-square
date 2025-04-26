@@ -123,7 +123,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Desktop\\Projects\\Trojan_Square\\trojan-square\\src\\generated\\prisma",
+      "value": "/Users/kishanseksaria/Workspace/Projects/grids/trojan-square/trojan-square/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -132,18 +132,19 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [
       "postgresqlExtensions"
     ],
-    "sourceFilePath": "C:\\Desktop\\Projects\\Trojan_Square\\trojan-square\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/kishanseksaria/Workspace/Projects/grids/trojan-square/trojan-square/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.6.0",

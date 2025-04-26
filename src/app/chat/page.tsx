@@ -3,7 +3,6 @@ import CustomIcon from '@/components/CustomIcon'
 import ShowTooltip from '@/components/ShowTooltip'
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle
