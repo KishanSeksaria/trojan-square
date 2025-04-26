@@ -12,6 +12,7 @@ import { SendHorizontal } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import React from 'react'
 
+// TODO: Automatically focus the input field when the page loads
 export default function ClientChatPage() {
   const { chatId } = useParams()
   const chatMessages = useQuery(api.messages.getAllByChatId, {
@@ -64,6 +65,7 @@ export default function ClientChatPage() {
     handleSubmit()
   }
 
+  // Scroll to the bottom of the chat when new messages are added
   const bottomRef = React.useRef<HTMLDivElement | null>(null)
 
   React.useEffect(() => {
@@ -71,6 +73,15 @@ export default function ClientChatPage() {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [messages])
+
+  // Focus the input field when the component mounts
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
+
+  React.useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   return (
     <>
@@ -91,6 +102,7 @@ export default function ClientChatPage() {
         <Input
           value={input}
           onChange={handleInputChange}
+          ref={inputRef}
           onKeyDown={async e => {
             if (e.key === 'Enter') {
               e.preventDefault()
