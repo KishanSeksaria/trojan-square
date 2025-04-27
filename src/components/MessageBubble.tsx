@@ -10,7 +10,7 @@ function MessageBubble({ message }: { message: Message }) {
     <>
       <div
         className={cn(
-          'before:bg-background relative max-w-[60%] rounded-lg p-2 text-sm',
+          'before:bg-background relative max-w-[60%] rounded-lg p-2 text-sm break-words',
           isAssistant
             ? 'bg-secondary dark:bg-secondary/60 before:border-r-secondary self-start'
             : 'bg-accent before:border-l-accent self-end'

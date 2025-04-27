@@ -43,7 +43,7 @@ export default function HomePage() {
       {/* Features Section */}
       <section id='features' className='px-8 py-12'>
         <h3 className='mb-6 text-2xl font-bold'>Features</h3>
-        <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+        <div className='grid grid-cols-1 gap-8 lg:grid-cols-2'>
           <div className='grid grid-cols-2 gap-4'>
             {questionAnswers.map((item, index) => (
               <ChatCard
