@@ -1,14 +1,16 @@
+'use client'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ConvexClientProvider } from './ConvexProvider'
 import { ThemeProvider } from './ThemeProvider'
+import { usePathname } from 'next/navigation'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
+  const pathName = usePathname()
+  console.log('Current path:', pathName)
   return (
     <ClerkProvider
       publishableKey={process.env.CLERK_CONVEX_PUBLISHABLE_KEY!}
-      afterSignOutUrl={
-        process.env.NEXT_PUBLIC_AFTER_SIGN_OUT_URL || 'http://localhost:3000/'
-      }
+      afterSignOutUrl={'/'}
     >
       <ConvexClientProvider>
         <ThemeProvider

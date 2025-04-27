@@ -81,7 +81,10 @@ function ChatSidebar({
                     isActive={chat._id === activeChatId}
                   >
                     <Link href={`/chat/${chat._id}`}>
-                      <TextGenerateEffect words={chat.title} />
+                      <TextGenerateEffect
+                        words={chat.title}
+                        className='text-foreground hover:text-foreground/80 line-clamp-1 text-xs font-medium'
+                      />
                     </Link>
                   </SidebarMenuButton>
                   <AlertDialog>
@@ -89,7 +92,7 @@ function ChatSidebar({
                       <AlertDialogTrigger asChild>
                         <SidebarMenuAction asChild>
                           <CustomIcon>
-                            <Trash className='text-destructive/75' />
+                            <Trash className='text-destructive' />
                           </CustomIcon>
                         </SidebarMenuAction>
                       </AlertDialogTrigger>
@@ -114,7 +117,7 @@ function ChatSidebar({
                             }
                           }}
                         >
-                          Continue
+                          Delete
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

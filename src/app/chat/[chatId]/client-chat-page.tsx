@@ -12,7 +12,6 @@ import { SendHorizontal } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import React from 'react'
 
-// TODO: Automatically focus the input field when the page loads
 export default function ClientChatPage() {
   const { chatId } = useParams()
   const chatMessages = useQuery(api.messages.getAllByChatId, {
@@ -113,7 +112,7 @@ export default function ClientChatPage() {
         />
         <Button
           type='submit'
-          variant='ghost'
+          variant='default'
           size='icon'
           className='absolute right-2 my-auto'
           onClick={async () => {

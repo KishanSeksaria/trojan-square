@@ -40,7 +40,7 @@ export const questionAnswers: QuestionAnswer[] = [
     answer: 'The USC vs. UCLA football game is on Saturday at 7 PM.'
   },
   {
-    question: 'What courses is Prof. Saty teaching next sem?',
+    question: 'What courses is Prof. Saty teaching next semester?',
     answer: 'Professor Saty is teaching CSCI 572 and CSCI 585 in the fall.'
   }
 ]
