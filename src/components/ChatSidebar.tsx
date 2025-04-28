@@ -112,7 +112,7 @@ function ChatSidebar({
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => {
-                            deleteChat({ chatId: chat._id })
+                            void deleteChat({ chatId: chat._id })
                             toast.success('Chat deleted successfully')
                             if (chat._id === activeChatId) {
                               router.push('/chat')
