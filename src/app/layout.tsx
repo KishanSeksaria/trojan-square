@@ -5,6 +5,7 @@ import Providers from '@/components/Providers'
 import Header from '@/components/Header'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import Image from 'next/image'
+import { Toaster } from '@/components/ui/sonner'
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
@@ -41,6 +42,7 @@ export default function RootLayout({
             </SignedOut>
           </div>
         </Providers>
+        <Toaster duration={2000} />
       </body>
     </html>
   )
