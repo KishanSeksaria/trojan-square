@@ -70,7 +70,6 @@ CLERK_SECRET_KEY=<your_clerk_secret_key>
 CLERK_CONVEX_ISSUER_URL=<your_clerk_issuer_url>
 CLERK_CONVEX_PUBLISHABLE_KEY=<your_clerk_convex_publishable_key>
 CLERK_WEBHOOK_SECRET=<your_clerk_webhook_secret>
-NEXT_PUBLIC_AFTER_SIGN_OUT_URL=<your_sign_out_redirect_url>
 ```
 
 3. No need to create a separate `.env.convex.local` file as the Convex deployment information is already included in the `.env.local` file.
@@ -115,7 +114,7 @@ trojan-square/
 │   │   ├── api/           # API endpoints
 │   │   │   ├── chat/      # Chat API
 │   │   ├── chat/          # Chat interface pages
-│   |   │   ├── chatId/          # Specific Chat interface
+│   |   │   ├── chatId/    # Specific Chat page
 │   │   └── marketplace/   # Marketplace pages
 │   ├── components/        # React components
 │   │   └── ui/            # UI components (Shadcn UI components)
