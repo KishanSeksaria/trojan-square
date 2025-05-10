@@ -13,7 +13,6 @@ import { QueryCtx } from './_generated/server'
 
 /**
  * Get all users from the database
- * Used for admin or listing purposes
  */
 export const getAll = zQuery({
   args: {},

@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import {
   Sidebar,
@@ -16,7 +17,7 @@ import ShowTooltip from './ShowTooltip'
 import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { HTMLAttributes } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import CustomIcon from './CustomIcon'
 import { Doc } from '@/convex/_generated/dataModel'
@@ -115,7 +116,8 @@ function ChatSidebar({
                             void deleteChat({ chatId: chat._id })
                             toast.success('Chat deleted successfully')
                             if (chat._id === activeChatId) {
-                              router.push('/chat')
+                              // router.push('/chat')
+                              redirect('/chat')
                             }
                           }}
                         >
