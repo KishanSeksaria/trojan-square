@@ -42,7 +42,7 @@ export default function RootLayout({
             </SignedOut>
           </div>
         </Providers>
-        <Toaster duration={2000} />
+        <Toaster duration={2000} richColors />
       </body>
     </html>
   )

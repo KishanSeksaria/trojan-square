@@ -35,8 +35,6 @@ import {
 import { TextGenerateEffect } from './ui/text-generate-effect'
 import { toast } from 'sonner'
 
-// import { TextGenerateEffect } from './ui/text-generate-effect'
-
 function ChatSidebar({
   className,
   chats,
@@ -116,7 +114,6 @@ function ChatSidebar({
                             void deleteChat({ chatId: chat._id })
                             toast.success('Chat deleted successfully')
                             if (chat._id === activeChatId) {
-                              // router.push('/chat')
                               redirect('/chat')
                             }
                           }}
