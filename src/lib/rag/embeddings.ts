@@ -1,43 +1,9 @@
-/**
- * Utilities for generating embeddings for RAG system
- */
-import { pipeline } from '@huggingface/transformers'
-import type { FeatureExtractionPipeline } from '@huggingface/transformers'
-import path from 'path'
-import { env } from 'onnxruntime-node'
+type EmbedRequestBody = {
+  textToEmbed: string
+}
 
-// Mark as server-only
-import 'server-only'
-
-let embedderPromise: Promise<FeatureExtractionPipeline> | null = null
-
-async function getEmbedder(): Promise<FeatureExtractionPipeline> {
-  if (!embedderPromise) {
-    embedderPromise = (async () => {
-      try {
-        const modelPath = path.join(
-          process.cwd(),
-          'local_models',
-          'all-MiniLM-L6-v2'
-        )
-        console.log('Using model path:', modelPath)
-
-        // Configure ONNX environment for Node.js
-        env.wasm.numThreads = 1
-
-        const embedder = await pipeline('feature-extraction', modelPath, {
-          local_files_only: true,
-          dtype: 'fp16'
-        })
-        return embedder as FeatureExtractionPipeline
-      } catch (error) {
-        embedderPromise = null
-        console.error('Error initializing embedder:', error)
-        throw error
-      }
-    })()
-  }
-  return embedderPromise
+type EmbedResponse = {
+  embeddings: number[][]
 }
 
 /**
@@ -47,12 +13,22 @@ async function getEmbedder(): Promise<FeatureExtractionPipeline> {
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
   try {
-    const embedderInstance = await getEmbedder()
-    const embedding = await embedderInstance(text, {
-      pooling: 'mean',
-      normalize: true
-    })
-    return embedding.data as number[]
+    const response = await fetch(
+      process.env.EMBEDDING_GENERATION_ENDPOINT || '',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ textToEmbed: text } as EmbedRequestBody)
+      }
+    )
+    console.log('Response from embedder:', response)
+
+    const data = (await response.json()) as EmbedResponse
+    console.log('Response from embedder:', data)
+
+    return data.embeddings[0] as number[]
   } catch (error) {
     console.error('Error generating embedding:', error)
     throw error

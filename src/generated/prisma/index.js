@@ -124,7 +124,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/kishanseksaria/Workspace/Projects/grids/trojan-square/trojan-square/src/generated/prisma",
+      "value": "/Users/kishanseksaria/Workspace/Projects/personal/trojan-square/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -140,7 +140,7 @@ const config = {
     "previewFeatures": [
       "postgresqlExtensions"
     ],
-    "sourceFilePath": "/Users/kishanseksaria/Workspace/Projects/grids/trojan-square/trojan-square/prisma/schema.prisma",
+    "sourceFilePath": "/Users/kishanseksaria/Workspace/Projects/personal/trojan-square/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
